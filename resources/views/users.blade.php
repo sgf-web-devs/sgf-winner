@@ -54,12 +54,20 @@
                 </ul>
             </div>
         @endif
-        <form action="/" method="post">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="text" name="name" id="name" required="required" placeholder="Name"  />
-            <input type="email" name="email" id="email" required="required" placeholder="Email Address" />
-            <button type="submit">Submit</button>
-        </form>
+        @if (Cookie::get('success'))
+            <h1>Thanks for signing up!</h1>
+            <h3>Stay tuned to see if you win one of the prizes!</h3>
+
+        @else
+            <form action="/" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="text" name="name" id="name" required="required" placeholder="Name"  />
+                <input type="email" name="email" id="email" required="required" placeholder="Email Address" />
+                <button type="submit">Submit</button>
+            </form>
+
+        @endif
+
     </div>
 </div>
 </body>

@@ -42,10 +42,12 @@ class UserController extends Controller
         $new_user->email = $request->email;
 
         $new_user->save();
+        $response = new \Illuminate\Http\Response(redirect('/'));
+        $response->withCookie(cookie('success', true, 45000));
+        return $response;
+//        return view("users")->withCookie(cookie('success', '1', 60));
+//            ;
 
-        return view("success");
-
-        //
     }
 
     /**
