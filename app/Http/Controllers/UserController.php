@@ -26,10 +26,7 @@ class UserController extends Controller
 //        $post_data = Input::all();
 
         $new_user = new User;
-        $this->validate($request, [
-            'user.name' => 'required',
-            'user.email' => 'required|unique',
-        ]);
+//        git
         $new_user->name = $request->name;
         $new_user->email = $request->email;
 
