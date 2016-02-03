@@ -45,16 +45,17 @@
 <div class="container">
     <div class="content">
         <h3>SGF Web Devs Signup</h3>
-        {{--@if (count($errors) > 0)--}}
-            {{--<div class="alert alert-danger">--}}
-                {{--<ul>--}}
-                    {{--@foreach ($errors->all() as $error)--}}
-                        {{--<li>{{ $error }}</li>--}}
-                    {{--@endforeach--}}
-                {{--</ul>--}}
-            {{--</div>--}}
-        {{--@endif--}}
+        @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                <ul style="list-style-type:none; color: red; font-weight:bold;">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="/" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="text" name="name" id="name" required="required" placeholder="Name"  />
             <input type="email" name="email" id="email" required="required" placeholder="Email Address" />
             <button type="submit">Submit</button>

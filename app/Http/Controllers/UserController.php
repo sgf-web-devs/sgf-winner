@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
+use Validator;
 use Illuminate\Support\MessageBag;
 
 
@@ -14,6 +15,7 @@ class UserController extends Controller
     public function getIndex()
     {
         return view("users");
+
     }
 
     /**
@@ -26,7 +28,16 @@ class UserController extends Controller
 //        $post_data = Input::all();
 
         $new_user = new User;
-//        git
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|unique:users',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/')
+                ->withErrors($validator)
+                ->withInput();
+        }
         $new_user->name = $request->name;
         $new_user->email = $request->email;
 
