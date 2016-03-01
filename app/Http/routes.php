@@ -36,8 +36,12 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 Route::group(['middleware' => 'web'], function () {
     Route::get('/auth0/callback', 'Auth0Controller@callback');
     Route::auth();
+
+
     Route::get('/', function(){
-        event(new DevCheckedIn(Auth::user()));
+        if(Auth::check()) {
+            event(new DevCheckedIn(Auth::user()));
+        }
 
 
         return view("users", ['data' => Auth::user()]);
