@@ -5,6 +5,8 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
+    <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
+
     <style>
         html, body {
             height: 100%;
@@ -77,12 +79,12 @@
 <script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
 <script type="text/javascript">
 
-    var lock = new Auth0Lock('Nko1NUaKIElDRrUwzryYEgovGa6OJRIv', 'sgfwebdevs.auth0.com');
+    var lock = new Auth0Lock('{{ env('AUTH0_CLIENT_ID') }}', 'sgfwebdevs.auth0.com');
 
 
     function signin() {
         lock.show({
-            callbackURL: 'http://signup.dev/auth0/callback'
+            callbackURL: "{{url('auth0/callback')}}"
             , responseType: 'code'
             , authParams: {
                 scope: 'openid profile'
@@ -90,6 +92,26 @@
         });
         console.log(lock);
     }
+</script>
+
+
+<script>
+    // Enable pusher logging - don't include this in production
+    Pusher.log = function (message) {
+        if (window.console && window.console.log) {
+            window.console.log(message);
+        }
+    };
+
+    var pusher = new Pusher('{{ env('PUSHER_KEY') }}', {
+        encrypted: true
+    });
+
+    var channel = pusher.subscribe('sgf-channel');
+    channel.bind('DevCheckedIn', function (data) {
+        console.log(data);
+    });
+
 </script>
 
 </body>

@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -31,9 +34,18 @@
 //});
 
 Route::group(['middleware' => 'web'], function () {
-    Route::get('/auth0/callback', '\Auth0\Login\Auth0Controller@callback');
+    Route::get('/auth0/callback', 'Auth0Controller@callback');
     Route::auth();
-    Route::controller('/', 'UserController');
+
+
+    Route::get('/', function(){
+        if(Auth::check()) {
+            event(new DevCheckedIn(Auth::user()));
+        }
+
+
+        return view("users", ['data' => Auth::user()]);
+    });
 
 
     Route::get('/logout', function () {
@@ -42,3 +54,32 @@ Route::group(['middleware' => 'web'], function () {
     });
 
 });
+
+
+class DevCheckedIn implements ShouldBroadcast
+{
+    use SerializesModels;
+
+    public $user;
+
+    public function __construct(\Auth0\Login\Auth0User $user)
+    {
+        $this->user = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'picture' => $user->picture,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at
+        ];
+    }
+
+    /**
+     * Get the channels the event should be broadcast on.
+     *
+     * @return array
+     */
+    public function broadcastOn()
+    {
+        return ['sgf-channel'];
+    }
+}

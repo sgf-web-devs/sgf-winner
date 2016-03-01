@@ -40,7 +40,7 @@ return array(
     |
     */
 
-     'redirect_uri'  => 'http://signup.dev/auth0/callback',
+     'redirect_uri'  => url('auth0/callback'),
 
     /*
     |--------------------------------------------------------------------------

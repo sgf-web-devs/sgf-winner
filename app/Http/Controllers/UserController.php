@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Events\DevCheckedIn;
 use App\User;
 use Illuminate\Http\Request;
 use Validator;
@@ -19,6 +20,11 @@ class UserController extends Controller
      */
     public function getIndex(CookieJar $cookiejar, Request $request)
     {
+        //return Auth::user()->email;
+
+
+        event(new DevCheckedIn(Auth::user()));
+
 
         $response = new Response(view('users')->with(['data'=>Auth::user()]));
         if (Cookie::get('success') !== false) {
@@ -39,7 +45,6 @@ class UserController extends Controller
     public function postIndex(Request $request)
     {
 //        $post_data = Input::all();
-
         $new_user = new User;
         $validator = Validator::make($request->all(), [
             'name' => 'required',
