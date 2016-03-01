@@ -25,7 +25,20 @@
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+//
+//Route::group(['middleware' => ['web']], function () {
+//
+//});
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => 'web'], function () {
+    Route::get('/auth0/callback', '\Auth0\Login\Auth0Controller@callback');
+    Route::auth();
     Route::controller('/', 'UserController');
+
+
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('');
+    });
+
 });

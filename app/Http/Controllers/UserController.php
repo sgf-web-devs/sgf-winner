@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Cookie\CookieJar;
+use Illuminate\Http\Response;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class UserController extends Controller
@@ -12,9 +17,17 @@ class UserController extends Controller
     /**
      * Responds to requests to GET /users
      */
-    public function getIndex()
+    public function getIndex(CookieJar $cookiejar, Request $request)
     {
-        return view("users");
+
+        $response = new Response(view('users')->with(['data'=>Auth::user()]));
+        if (Cookie::get('success') !== false) {
+            $response->withCookie(Cookie::forget('success'));
+            return $response;
+        }
+
+        return $response;
+//        return view("users");
 
     }
 
@@ -42,8 +55,11 @@ class UserController extends Controller
         $new_user->email = $request->email;
 
         $new_user->save();
-        $response = new \Illuminate\Http\Response(redirect('/'));
-        $response->withCookie(cookie('success', true, 45000));
+
+        $response = new Response(redirect('/'));
+
+        $response->withCookie(cookie('entrysuccess', true, 3600));
+
         return $response;
 //        return view("users")->withCookie(cookie('success', '1', 60));
 //            ;

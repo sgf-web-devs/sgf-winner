@@ -44,31 +44,53 @@
 <body>
 <div class="container">
     <div class="content">
-        <h3>SGF Web Devs Signup</h3>
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul style="list-style-type:none; color: red; font-weight:bold;">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (Cookie::get('success'))
-            <h1>Thanks for signing up!</h1>
-            <h3>Stay tuned to see if you win one of the prizes!</h3>
+        @if (Auth::check())
 
+            <h3>SGF Web Devs Signup</h3>
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul style="list-style-type:none; color: red; font-weight:bold;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (Cookie::get('entrysuccess'))
+                <h1>Thanks for signing up!</h1>
+                <h3>Stay tuned to see if you win one of the prizes!</h3>
+
+            @else
+                <form action="/" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="text" name="name" id="name" required="required" placeholder="Name" value="{{ $data->name }}" />
+                    <input type="email" name="email" id="email" required="required" placeholder="Email Address" value="{{ $data->email }}" />
+                    <button type="submit">Submit</button>
+                </form>
+
+            @endif
         @else
-            <form action="/" method="post">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="text" name="name" id="name" required="required" placeholder="Name"  />
-                <input type="email" name="email" id="email" required="required" placeholder="Email Address" />
-                <button type="submit">Submit</button>
-            </form>
-
+            <button onclick="window.signin();">Login</button>
         @endif
-
     </div>
 </div>
+<script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
+<script type="text/javascript">
+
+    var lock = new Auth0Lock('Nko1NUaKIElDRrUwzryYEgovGa6OJRIv', 'sgfwebdevs.auth0.com');
+
+
+    function signin() {
+        lock.show({
+            callbackURL: 'http://signup.dev/auth0/callback'
+            , responseType: 'code'
+            , authParams: {
+                scope: 'openid profile'
+            }
+        });
+        console.log(lock);
+    }
+</script>
+
 </body>
 </html>
