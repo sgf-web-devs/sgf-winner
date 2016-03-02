@@ -1,0 +1,39 @@
+
+
+.user-list
+{
+	color: #fff; text-shadow: 0px 0px 5px #000; text-align: center;
+
+	ul {
+		list-style: none; padding-left: 0; @include cf;
+		li {
+			padding: 15px;
+			.email, .name { display: block; font-size: 20px; font-weight: bold; }
+		}
+
+		img {
+			width: 100%; border-radius: 50%;
+			box-shadow: 0px 0px 5px #000; margin-bottom: .5em;
+		}
+
+		@for $i from 1 through 4 {
+			&.count_#{$i} li { @include column(1/4, $cycle: 4); }
+		}
+
+		@for $i from 5 through 20 {
+			&.count_#{$i} li { @include column(1/8, $cycle: 8); }
+		}
+
+		@for $i from 21 through 30 {
+			&.count_#{$i} li { @include column(1/10, $cycle: 10); }
+		}
+
+		@for $i from 31 through 40 {
+			&.count_#{$i} li { @include column(1/14, $cycle: 14); }
+		}
+
+		@for $i from 41 through 100 {
+			&.count_#{$i} li { @include column(1/20, $cycle: 20); }
+		}
+	}
+}
