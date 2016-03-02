@@ -37,16 +37,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/auth0/callback', 'Auth0Controller@callback');
     Route::auth();
 
-
     Route::get('/', function(){
         if(Auth::check()) {
             event(new DevCheckedIn(Auth::user()));
         }
 
 
-        return view("users", ['data' => Auth::user()]);
+        return view("signup", ['data' => Auth::user()]);
     });
 
+    Route::controller('users', 'UserController');
 
     Route::get('/logout', function () {
         Auth::logout();

@@ -19,7 +19,7 @@ return array(
     |
     */
 
-     'client_id'     => 'Nko1NUaKIElDRrUwzryYEgovGa6OJRIv',
+     'client_id'     => env('AUTH0_CLIENT_ID'),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
     |   As set in the auth0 administration page
     |
     */
-     'client_secret' => 'bQvZV60w1AXi114ndlhLV5skNFJ0TLtMmBpt6bQC0ARCH68cW7kkQHmQWyV-pO4l',
+     'client_secret' => env('AUTH0_SECRET'),
 
 
    /*
@@ -40,10 +40,9 @@ return array(
     |
     */
 
-     'redirect_uri'  => url('auth0/callback'),
-
+     'redirect_uri'  => env('AUTH0_REDIRECT_URI'),
     /*
-    |--------------------------------------------------------------------------
+   ,|--------------------------------------------------------------------------
     |   Persistence Configuration
     |--------------------------------------------------------------------------
     |   persist_user            (Boolean) Optional. Indicates if you want to persist the user info, default true
