@@ -56,7 +56,13 @@ class SignupController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $new_user->name = $request->name;
+        if (!str_contains($request->name, '@')) {
+            $new_user->name = $request->name;
+        }
+        else {
+            $new_user->name = $request->nickname;
+
+        }
         $new_user->email = $request->email;
 
         $new_user->save();
