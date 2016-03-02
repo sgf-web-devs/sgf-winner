@@ -25,7 +25,7 @@
         channel.bind('DevCheckedIn', function (data) {
             $.get('/users/all', function(data){
                 $('.user-list ul').html('');
-                $('.user-list ul').removeClass('').addClass('count_' + data.length);
+                $('.user-list ul').removeClass().addClass('count_' + data.length);
 
                 _.each(data, function (user) {
                     $('.user-list ul').append('<li><img src=' + user.picture + ' /><span class="name">' + user.name + '</span></li>');
