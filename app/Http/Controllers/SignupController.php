@@ -42,39 +42,38 @@ class SignupController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function postIndex(Request $request)
-    {
-//        $post_data = Input::all();
-        $new_user = new User;
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|unique:users',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('/')
-                ->withErrors($validator)
-                ->withInput();
-        }
-        if (!str_contains($request->name, '@')) {
-            $new_user->name = $request->name;
-        }
-        else {
-            $new_user->name = $request->nickname;
-
-        }
-        $new_user->email = $request->email;
-
-        $new_user->save();
-
-        $response = new Response(redirect('/'));
-
-        $response->withCookie(cookie('entrysuccess', true, 3600));
-
-        return $response;
-
-
-    }
+//    public function postIndex(Request $request)
+//    {
+////        $post_data = Input::all();
+//        $new_user = new User;
+//        $validator = Validator::make($request->all(), [
+//            'name' => 'required',
+//            'email' => 'required|unique:users',
+//        ]);
+//        if ($validator->fails()) {
+//            return redirect('/')
+//                ->withErrors($validator)
+//                ->withInput();
+//        }
+//        if (!str_contains($request->name, '@')) {
+//            $new_user->name = $request->name;
+//        }
+//        else {
+//            $new_user->name = $request->nickname;
+//
+//        }
+//        $new_user->email = $request->email;
+//
+//        $new_user->save();
+//
+//        $response = new Response(redirect('/'));
+//
+//        $response->withCookie(cookie('entrysuccess', true, 3600));
+//
+//        return $response;
+//
+//
+//    }
 
 
 }

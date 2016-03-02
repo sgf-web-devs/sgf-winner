@@ -35,6 +35,14 @@ class Auth0Controller extends Controller
         $auth0User = $this->userRepository->getUserByUserInfo($profile);
 
         if ($auth0User) {
+            if (!str_contains($auth0User->name, '@')) {
+                $name = $auth0User->name;
+            }
+            else {
+                $name = $auth0User->nickname;
+
+            }
+
             // If we have a user, we are going to log him in, but if
             // there is an onLogin defined we need to allow the Laravel developer
             // to implement the user as he wants an also let him store it.
@@ -42,7 +50,7 @@ class Auth0Controller extends Controller
                 'github_id' => $auth0User->user_id,
                 'email' => $auth0User->email,
                 'picture' => $auth0User->picture,
-                'name' => $auth0User->name,
+                'name' => $name,
             ]);
 
 
