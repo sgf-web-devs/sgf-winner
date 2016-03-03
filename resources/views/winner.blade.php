@@ -53,7 +53,7 @@
                     </td>
                     <td>
                         @if($count == 1)
-                            PDF
+                            Pluralsight
                         @elseif($count == 2)
                             JetBrains
                         @endif
