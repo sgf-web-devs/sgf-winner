@@ -30,7 +30,7 @@ class UserController extends Controller
         $data = [
             'users' => $users,
             'time' => $time,
-            'quip' => '6RaPf0qc',
+            'quip' => '70kKRJqY',
         ];
 
         return view("userlist", $data);
