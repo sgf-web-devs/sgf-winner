@@ -28,7 +28,10 @@
         .content {
             text-align: center;
             display: inline-block;
+            font-size: 50px;
         }
+
+        h1 { font-size: 70px;  }
 
         .title {
             font-size: 96px;
@@ -55,6 +58,8 @@
                         @if($count == 1)
                             Pluralsight
                         @elseif($count == 2)
+                            Pluralsight
+                        @elseif($count == 3)
                             JetBrains
                         @endif
                     </td>

@@ -38,7 +38,7 @@ class UserController extends Controller
 
     public function getWinners()
     {
-        $winners = User::All()->random(2);
+        $winners = User::All()->random(3);
 
         return view("winner")->with(array('users' => $winners));
     }
